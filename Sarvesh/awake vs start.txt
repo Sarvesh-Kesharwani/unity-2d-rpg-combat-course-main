@@ -1,0 +1,29 @@
+Awake vs Start — short
+
+Awake
+
+Called when the script instance is loaded (scene load or Instantiate).
+Runs before any Start methods.
+Runs even if the component is disabled.
+Use for internal setup and GetComponent assignments.
+Start
+
+Called just before the first Update, only if the component is enabled.
+Runs after all Awake calls (so other objects have finished their Awake).
+Use for initialization that depends on other objects being initialized.
+Order (simplified): Awake (all) → OnEnable → Start (all) → Update/FixedUpdate...
+
+Example:
+// Example usage
+public class Example : MonoBehaviour {
+    private Rigidbody2D rb;
+    private Transform player;
+
+    void Awake() {
+        rb = GetComponent<Rigidbody2D>(); // internal refs
+    }
+
+    void Start() {
+        player = GameObject.FindWithTag("Player").transform; // safe to rely on other objects
+    }
+}
